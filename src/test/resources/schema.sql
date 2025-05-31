@@ -1,4 +1,4 @@
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255),
   email VARCHAR(255),
@@ -11,7 +11,7 @@ CREATE TABLE users (
   updated_at TIMESTAMP
 );
 
-CREATE TABLE insurance_policy (
+CREATE TABLE  IF NOT EXISTS insurance_policy (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   policy_type VARCHAR(255),
   coverage_amount DOUBLE,
@@ -24,7 +24,7 @@ CREATE TABLE insurance_policy (
   CONSTRAINT fk_policy_user FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE insurance_history (
+CREATE TABLE  IF NOT EXISTS insurance_history (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   insurance_policy_id BIGINT UNIQUE,
   user_id BIGINT,
@@ -34,7 +34,7 @@ CREATE TABLE insurance_history (
   CONSTRAINT fk_history_user FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE insurance_claim (
+CREATE TABLE  IF NOT EXISTS insurance_claim (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   claim_amount DOUBLE,
   claim_status VARCHAR(100),
@@ -45,7 +45,7 @@ CREATE TABLE insurance_claim (
   CONSTRAINT fk_claim_history FOREIGN KEY (insurance_history_id) REFERENCES insurance_history(id)
 );
 
-CREATE TABLE prediction_result (
+CREATE TABLE  IF NOT EXISTS prediction_result (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   predicted_cost DOUBLE,
   predicted_coverage DOUBLE,
