@@ -1,0 +1,16 @@
+C:\SPRİNG BOOT\Spring Boot All Of Project\HealthFinTelBackend\src\main\java\com\healthfintel\backend\BackendApplication.java
+C:\SPRİNG BOOT\Spring Boot All Of Project\HealthFinTelBackend\src\main\java\com\healthfintel\backend\controller\InsuranceController.java
+C:\SPRİNG BOOT\Spring Boot All Of Project\HealthFinTelBackend\src\main\java\com\healthfintel\backend\dto\InsuranceCalculationRequestDto.java
+C:\SPRİNG BOOT\Spring Boot All Of Project\HealthFinTelBackend\src\main\java\com\healthfintel\backend\dto\InsuranceCalculationResponseDto.java
+C:\SPRİNG BOOT\Spring Boot All Of Project\HealthFinTelBackend\src\main\java\com\healthfintel\backend\dto\InsuranceClaimDto.java
+C:\SPRİNG BOOT\Spring Boot All Of Project\HealthFinTelBackend\src\main\java\com\healthfintel\backend\dto\InsuranceHistoryResponseDto.java
+C:\SPRİNG BOOT\Spring Boot All Of Project\HealthFinTelBackend\src\main\java\com\healthfintel\backend\dto\InsuranceHistorySummaryDto.java
+C:\SPRİNG BOOT\Spring Boot All Of Project\HealthFinTelBackend\src\main\java\com\healthfintel\backend\dto\InsurancePolicyDto.java
+C:\SPRİNG BOOT\Spring Boot All Of Project\HealthFinTelBackend\src\main\java\com\healthfintel\backend\dto\UserInfoResponseDto.java
+C:\SPRİNG BOOT\Spring Boot All Of Project\HealthFinTelBackend\src\main\java\com\healthfintel\backend\model\InsuranceClaim.java
+C:\SPRİNG BOOT\Spring Boot All Of Project\HealthFinTelBackend\src\main\java\com\healthfintel\backend\model\InsuranceHistory.java
+C:\SPRİNG BOOT\Spring Boot All Of Project\HealthFinTelBackend\src\main\java\com\healthfintel\backend\model\InsurancePolicy.java
+C:\SPRİNG BOOT\Spring Boot All Of Project\HealthFinTelBackend\src\main\java\com\healthfintel\backend\model\PredictionResult.java
+C:\SPRİNG BOOT\Spring Boot All Of Project\HealthFinTelBackend\src\main\java\com\healthfintel\backend\model\User.java
+C:\SPRİNG BOOT\Spring Boot All Of Project\HealthFinTelBackend\src\main\java\com\healthfintel\backend\repository\InsuranceHistoryRepository.java
+C:\SPRİNG BOOT\Spring Boot All Of Project\HealthFinTelBackend\src\main\java\com\healthfintel\backend\service\InsuranceService.java
