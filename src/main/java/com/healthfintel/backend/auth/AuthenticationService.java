@@ -3,6 +3,8 @@ package com.healthfintel.backend.auth;
 
 import com.healthfintel.backend.dto.LoginRequestDto;
 import com.healthfintel.backend.dto.LoginResponseDto;
+import com.healthfintel.backend.model.User;
+import com.healthfintel.backend.security.CustomUserDetailsService;
 import com.healthfintel.backend.security.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,7 +21,7 @@ public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
-    private final UserDetailsService userDetailsService;
+    private final CustomUserDetailsService userDetailsService;
 
     private final JwtUtils jwtUtils;
 
@@ -29,14 +31,15 @@ public class AuthenticationService {
 
 
         try{
+
             var auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         }catch (BadCredentialsException ex){
             throw new BadCredentialsException("Hatalı e-posta veya şifre.", ex);
         }
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
+        User user = userDetailsService.loadUserByUserEmail(request.getEmail());
 
-        var token = jwtUtils.generateToken(userDetails.getUsername());
+        var token = jwtUtils.generateToken(user.getId());
 
         //long expireTime = jwtUtils.getClaimFromToken(token, claims -> claims.getExpiration().getTime());
 

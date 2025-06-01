@@ -7,13 +7,25 @@ import com.healthfintel.backend.model.InsuranceHistory;
 import com.healthfintel.backend.model.InsurancePolicy;
 import com.healthfintel.backend.model.User;
 import com.healthfintel.backend.repository.InsuranceHistoryRepository;
+import com.healthfintel.backend.repository.UserRepository;
+import com.healthfintel.backend.security.JwtUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class InsuranceService {
+
+    @Autowired
+    JwtUtils jwtUtils;
+
+    @Autowired
+    UserRepository userRepository;
 
 
     private final InsuranceHistoryRepository insuranceHistoryRepository;
@@ -22,11 +34,21 @@ public class InsuranceService {
         this.insuranceHistoryRepository = insuranceHistoryRepository;
     }
 
-    public List<InsuranceHistory> getInsuranceHistoryForUser(User user) {
-        return insuranceHistoryRepository.findByUser(user);
+    public List<InsuranceHistoryResponseDto> getInsuranceHistoryForUser(String token) {
+        String userId;
+        try {
+            userId = jwtUtils.getUserIdFromToken(token);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid or expired token");
+        }
+
+        User user = userRepository.findById(Long.valueOf(userId))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"));
+
+
+        return  this.getInsuranceHistoryByUserId(user.getId());
     }
 
-    // Or by user id
     public List<InsuranceHistoryResponseDto> getInsuranceHistoryByUserId(Long userId) {
         List<InsuranceHistory> insuranceHistories = insuranceHistoryRepository.findByUserId(userId);
 
