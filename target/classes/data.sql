@@ -1,8 +1,8 @@
 -- USERS
 INSERT INTO users (id, name, email, password, age, gender, address, phone_number, created_at, updated_at) VALUES
 (1, 'Batuhan Yalçın', 'batu@gmail.com',
-  '$2a$10$1UQaCZw80JDRoz9/7KYpoef79RfmyEysvymx7s6Idyv/I9CkyyyyO' -- bcrypt hash of 'password123'
-, 23, 'Boy', 'İstanbul/Sancaktepe', '5550797029', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
+  '$2a$10$1UQaCZw80JDRoz9/7KYpoef79RfmyEysvymx7s6Idyv/I9CkyyyyO', -- bcrypt hash of 'password123'
+23, 'Boy', 'İstanbul/Sancaktepe', '5550797029', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
 
 -- INSURANCE POLICY
 INSERT INTO insurance_policy (id, policy_type, coverage_amount, premium_amount, valid_from, valid_until, user_id, created_at, updated_at) VALUES
