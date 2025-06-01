@@ -3,6 +3,7 @@ package com.healthfintel.backend.controller;
 import com.healthfintel.backend.dto.InsurancePredictionRequest;
 import com.healthfintel.backend.dto.InsurancePredictionResponse;
 import com.healthfintel.backend.service.InsurancePredictionService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/insurance")
+@SecurityRequirement(name = "bearerAuth")
 public class InsurancePredictionController {
     
     private final InsurancePredictionService insurancePredictionService;

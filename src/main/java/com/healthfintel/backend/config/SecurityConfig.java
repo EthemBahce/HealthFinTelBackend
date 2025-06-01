@@ -55,6 +55,8 @@ public class SecurityConfig {
                         auth
                                 .requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/h2-console/**").permitAll()
+                                .requestMatchers("/api/**").permitAll()
+                                .requestMatchers("/mock-python/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/auth/authenticate").permitAll()
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                                 .anyRequest().authenticated())
