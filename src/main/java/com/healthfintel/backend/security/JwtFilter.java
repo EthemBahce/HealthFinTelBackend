@@ -1,5 +1,6 @@
 package com.healthfintel.backend.security;
 
+import com.healthfintel.backend.model.User;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
@@ -22,6 +23,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import org.springframework.util.AntPathMatcher;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +31,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtils jwtUtils;
 
-    private final UserDetailsService customUserDetailsService;
+    private static final AntPathMatcher pathMatcher = new AntPathMatcher();
+
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
@@ -37,8 +41,16 @@ public class JwtFilter extends OncePerRequestFilter {
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         String authHeader = request.getHeader(AUTHORIZATION);
-        String username = null;
+        String userId = null;
         String jwtToken = null;
+
+
+        String path = request.getServletPath();
+
+        if (pathMatcher.match("/auth/**", path)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")){
             filterChain.doFilter(request, response);
@@ -49,7 +61,7 @@ public class JwtFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith("Bearer ")){
             jwtToken = authHeader.substring(7);
             try{
-                username = jwtUtils.getUsernameFromToken(jwtToken);
+                userId = jwtUtils.getUserIdFromToken(jwtToken);
             }catch (ExpiredJwtException ex) {
                 // Token süresi dolmuş
                 throw new AuthenticationCredentialsNotFoundException("Token expired", ex);
@@ -60,10 +72,11 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         //Eğer token geçerliyse
-        if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
-            UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+        if(userId != null && SecurityContextHolder.getContext().getAuthentication() == null){
+            User user = customUserDetailsService.loadUserByUserId(Long.valueOf(userId));
+            UserDetails userDetails = customUserDetailsService.loadUserByUsername(user.getEmail());
 
-            if (jwtUtils.validateToken(jwtToken, userDetails.getUsername())){
+            if (jwtUtils.validateToken(jwtToken, user.getId())){
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
                 );

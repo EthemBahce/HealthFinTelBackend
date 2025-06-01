@@ -26,7 +26,8 @@ public class JwtUtils {
 
 
     //JWT içerisindeki payload bilgisini alır, yani subject alanını
-    public String getUsernameFromToken(String token){
+    public String getUserIdFromToken(String token){
+        System.out.println("Exract userid: " + token);
         return getClaimFromToken(token, Claims::getSubject);
     }
 
@@ -61,9 +62,9 @@ public class JwtUtils {
     }
 
     //Jwt geçerliliğini kontrol ediyoruz
-    public boolean validateToken(String token, String username){
-        final String usernameFromToken = getUsernameFromToken(token);
-        return (usernameFromToken.equals(username) && !isTokenExpired(token));
+    public boolean validateToken(String token, Long userId){
+        final String userIdFromToken = getUserIdFromToken(token);
+        return (userIdFromToken.equals(userId.toString()) && !isTokenExpired(token));
     }
 
     private boolean isTokenExpired(String token){
@@ -75,10 +76,10 @@ public class JwtUtils {
         }
     }
 
-    public String generateToken(String username){
+    public String generateToken(Long userId){
 
         return Jwts.builder()
-                .setSubject(username) //payload içerisindeki subject yani username
+                .setSubject(String.valueOf(userId)) //payload içerisindeki subject yani userId
                 .setIssuedAt(new Date(System.currentTimeMillis()))//token oluşturulma zamanına eşit
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration)) // expire olacağı zamana eşit yani bitiş zamanı
                 .signWith(getSignInKey())//imzalama algoritmasını çalıştıran metot
